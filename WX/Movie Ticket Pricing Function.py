@@ -1,3 +1,5 @@
+"""Tetting Finish_11:30_6/17/2026"""
+
 import sys
 
 def calculate_ticket_price(age):
@@ -23,3 +25,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
