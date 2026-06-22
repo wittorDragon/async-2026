@@ -30,6 +30,19 @@ def evaluate_grade(score):
     # --- สาธิต GIL บล็อก CPU-bound Threading ---
     counter = [0]
 
+    def cpu_bound_task():
+        """CPU-bound: GIL ไม่ถูก release → เธรดสลับกันรัน ไม่ขนานแท้"""
+        for _ in range(100_000):
+            counter[0] += 1  # GIL ถูกถือไว้ตลอด → bottleneck
+
+    cpu_threads = [threading.Thread(target=cpu_bound_task) for _ in range(2)]
+    t1 = time.time()
+    for t in cpu_threads:
+        t.start()
+    for t in cpu_threads:
+        t.join()
+    cpu_thread_time = time.time() - t1
+
 def main():
     # เปลี่ยนจาก > 2 เป็น > 1 เพื่อรองรับระบบ arguments ของ VPL
     if len(sys.argv) > 1:
