@@ -1,4 +1,7 @@
 import sys
+import threading
+import time
+import multiprocessing
 
 def evaluate_grade(score):
     """
@@ -83,6 +86,12 @@ def main():
         test_score = 85
         result = evaluate_grade(test_score)
         print(f"Score: {test_score} -> Grade: {result}")
+
+        # แสดงผลเพิ่มเติมเมื่อรันแบบ manual
+        print("\n=== สรุป Concurrency vs Parallelism ===")
+        print("Threading (I/O-bound) → Concurrent จริง เพราะ GIL release ระหว่าง I/O")
+        print("Threading (CPU-bound) → ไม่ขนานแท้ เพราะ GIL ถูกถือตลอด")
+        print("Multiprocessing       → Parallel แท้ เพราะแต่ละ process มี GIL ของตัวเอง")
 
 if __name__ == "__main__":
     main()
