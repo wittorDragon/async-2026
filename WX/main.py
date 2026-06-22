@@ -3,6 +3,13 @@ import threading
 import time
 import multiprocessing
 
+def mp_cpu_task(n):
+        """แต่ละ process มี GIL ของตัวเอง → ขนานแท้"""
+        total = 0
+        for _ in range(n):
+            total += 1
+        return total
+
 def evaluate_grade(score):
     """
     แปลงคะแนนเป็นเกรด พร้อมสาธิต GIL และ Concurrency vs Parallelism
@@ -47,12 +54,7 @@ def evaluate_grade(score):
     cpu_thread_time = time.time() - t1
 
     # --- สาธิต True Parallelism ด้วย Multiprocessing (หลีกเลี่ยง GIL) ---
-    def mp_cpu_task(n):
-        """แต่ละ process มี GIL ของตัวเอง → ขนานแท้"""
-        total = 0
-        for _ in range(n):
-            total += 1
-        return total
+    
 
     t2 = time.time()
     with multiprocessing.Pool(2) as pool:
