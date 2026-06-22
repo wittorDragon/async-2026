@@ -31,7 +31,7 @@ def evaluate_grade(score):
     counter = [0]
 
     def cpu_bound_task():
-        """CPU-bound: GIL ไม่ถูก release → เธรดสลับกันรัน ไม่ขนานแท้"""
+        """: GIL ไม่ถูก release → เธรดสลับกันรัน ไม่ขนานแท้"""
         for _ in range(100_000):
             counter[0] += 1  # GIL ถูกถือไว้ตลอด → bottleneck
 
@@ -42,6 +42,34 @@ def evaluate_grade(score):
     for t in cpu_threads:
         t.join()
     cpu_thread_time = time.time() - t1
+
+    # --- สาธิต True Parallelism ด้วย Multiprocessing (หลีกเลี่ยง GIL) ---
+    def mp_cpu_task(n):
+        """แต่ละ process มี GIL ของตัวเอง → ขนานแท้"""
+        total = 0
+        for _ in range(n):
+            total += 1
+        return total
+
+    t2 = time.time()
+    with multiprocessing.Pool(2) as pool:
+        pool.map(mp_cpu_task, [100_000, 100_000])
+    mp_time = time.time() - t2
+
+    # --- แปลงคะแนนเป็นเกรด ---
+    if score >= 80:
+        grade = "A"
+    elif score >= 70:
+        grade = "B"
+    elif score >= 60:
+        grade = "C"
+    elif score >= 50:
+        grade = "D"
+    else:
+        grade = "F"
+
+    return grade
+
 
 def main():
     # เปลี่ยนจาก > 2 เป็น > 1 เพื่อรองรับระบบ arguments ของ VPL
