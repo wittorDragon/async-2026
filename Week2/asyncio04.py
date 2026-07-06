@@ -5,9 +5,9 @@ from time import ctime
 
 async def main():
     print(f"{ctime()} | -> Task Started")
-    await asyncio.sleep(1)
+    await asyncio.sleep(1)  # Pauses this coroutine for 1 
 
     print(f"{ctime()} | -> Task Finished")
 
-if __name__=="__main__":
-    asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())  # This will execute the main coroutine and demonstrate the await keyword
