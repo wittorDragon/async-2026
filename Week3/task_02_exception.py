@@ -1,24 +1,26 @@
-# Objective: Extract returned data safely and inspect crashed tasks without breaking the main loop.
+# Objective: Compare the structural and mechanical differences of both strategies in a racing scenario.
 import asyncio
 from time import ctime
 
-async def division_worker(a, b):
-    await asyncio.sleep(0.5)
-    return a / b # 
+async def runner(name, speed):
+    await asyncio.sleep(speed)
+    return f"{name} crossed line!"
 
 async def main():
-    task_success = asyncio.create_task(division_worker(10, 2))
-    task_fail = asyncio.create_task(division_worker(10, 0))
-
-    # 
-    await asyncio.sleep(1)
+    # Case A: Using gather() -> We must wait or ALL items to finish to get the ordered list
+    print(f"{ctime()} --- Starting gather() approach (Unified Aggregation) ---")
+    all_finishes = await asyncio.gather(runner("A", 0.5), runner("B", 2.0))
+    print(f"{ctime()} Gather output: {all_finishes}\n")
     
-    # 
-    if task_success.done() and not task_success.exception():
-        print(f"{ctime()} Task Success Result: {task_success.result()}") # 
-        
-    # 
-    if task_fail.done():
-        print(f"{ctime()} Task Fail Exception: {type(task_fail.exception()).__name__}") # 
+    # Case B: Using wait() -> We can decouple early as soon as a condition matches
+    print(f"{ctime()} --- Starting wait() approach (State control / Racing) ---")
+    active_tasks = {asyncio.create_task(runner("A", 0.5)), asyncio.create_task(runner("B", 2.0))}
+    
+    done, pending = await asyncio.wait(active_tasks, return_when=asyncio.FIRST_COMPLETED)
+    print(f"{ctime()} Wait output: The winner of the race is -> {list(done)[0].result()}")
+    
+    # Clean up the loser task still running in the pending set
+    for t in pending:
+        t.cancel()
 
 asyncio.run(main())

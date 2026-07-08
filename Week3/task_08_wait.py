@@ -7,14 +7,14 @@ async def network_probe(server_name, delay):
     return f"Ping successful: {server_name}"
 
 async def main():
-    # 
+    # asyncio.wait requires a set of im=nrth
     tasks = {
         asyncio.create_task(network_probe("Primary-Server", 2.0)),
         asyncio.create_task(network_probe("Backup-Server-1", 0.5)),
         asyncio.create_task(network_probe("Backup-Server-2", 1.0))
     }
     
-    # 
+    # Break execution flow immedately 
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
     
     print(f"{ctime()} Count of Tasks Done: {len(done)}")       # 
