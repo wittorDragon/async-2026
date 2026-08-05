@@ -27,8 +27,8 @@ html_code = f"""
     <body>
         <div class="card">
             <h1>หน้าจอแสดงผลนักศึกษา</h1>
-            <h3>รหัสนักศึกษา: <span style="color:#38bdf8;">{student_id}</span></h3>
-            <p style="font-size: 0.85em; color: #94a3b8;">เชื่อมต่อไปยัง Server: ws://{server_ip}:8000/ws/{student_id}</p>
+            <h3>รหัสนักศึกษา: <span style="color:#38bdf8;">{6710301021}</span></h3>
+            <p style="font-size: 0.85em; color: #94a3b8;">เชื่อมต่อไปยัง Server: ws://{server_ip}:8000/ws/{6710301021}</p>
         </div>
         
         <div id="messages"></div>

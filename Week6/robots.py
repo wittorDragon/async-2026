@@ -5,8 +5,8 @@ import httpx
 # ==========================================
 # 1. Configuration & Constants
 # ==========================================
-STUDENT_ID = "" 
-BASE_URL = ""
+STUDENT_ID = input("กรุณากรอกรหัสนักศึกษา (Student ID): ").strip()
+BASE_URL = input("กรุณากรอก IP ของ Server (กด Enter หากเป็น localhost): ").strip() or "localhost"
 
 # กำหนดลำดับชิ้นส่วนและหุ่นยนต์
 PARTS = ["A", "B", "C"]
@@ -18,6 +18,7 @@ ROBOTS = ["robot_1", "robot_2", "robot_3"]
 
 async def reset_factory(client: httpx.AsyncClient):
     """ส่ง Request เพื่อทำการ Reset สถานะของหุ่นยนต์ทั้งหมดของรหัสนักเรียนนี้"""
+
     # TODO: เติมโค้ดการส่ง POST request ไปยัง /student/{STUDENT_ID}/reset
     pass
 
@@ -25,11 +26,13 @@ async def grab_part(client: httpx.AsyncClient, robot_id: str, part: str):
     """สั่งให้หุ่นยนต์หยิบชิ้นส่วน 1 ชิ้น"""
     # TODO: เติมโค้ดส่ง POST request ไปยัง /student/{STUDENT_ID}/robot/{robot_id}/grab
     # พร้อมแนบ JSON Payload {"part": part}
+
     pass
 
 async def run_robot_task(client: httpx.AsyncClient, robot_id: str):
     """สั่งให้หุ่นยนต์ 1 ตัว ทำการหยิบชิ้นส่วน A, B, และ C ตามลำดับ"""
     # TODO: วนลูปหยิบชิ้นส่วนใน PARTS ตามลำดับเรียงกัน (Sequential inside single robot)
+    
     pass
 
 async def main():
@@ -37,7 +40,7 @@ async def main():
     async with httpx.AsyncClient(base_url=BASE_URL, timeout=10.0) as client:
         print("Resetting Factory...")
         await reset_factory(client)
-        
+        client_port = 8001
         start_time = time.time()
         print("Starting Async Robot Operation...")
         
