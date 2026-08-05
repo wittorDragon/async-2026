@@ -5,8 +5,8 @@ import httpx
 # ==========================================
 # 1. Configuration & Constants
 # ==========================================
-STUDENT_ID = input("กรุณากรอกรหัสนักศึกษา (Student ID): ").strip()
-BASE_URL = input("กรุณากรอก IP ของ Server (กด Enter หากเป็น localhost): ").strip() or "localhost"
+STUDENT_ID = input("กรุณากรอกรหัสนักศึกษา (Student ID): ").strip() # 6710301021
+BASE_URL = input("กรุณากรอก IP ของ Server (กด Enter หากเป็น localhost): ").strip() or "localhost" # 172.16.2.177:8088
 
 # กำหนดลำดับชิ้นส่วนและหุ่นยนต์
 PARTS = ["A", "B", "C"]
@@ -32,7 +32,7 @@ async def grab_part(client: httpx.AsyncClient, robot_id: str, part: str):
 async def run_robot_task(client: httpx.AsyncClient, robot_id: str):
     """สั่งให้หุ่นยนต์ 1 ตัว ทำการหยิบชิ้นส่วน A, B, และ C ตามลำดับ"""
     # TODO: วนลูปหยิบชิ้นส่วนใน PARTS ตามลำดับเรียงกัน (Sequential inside single robot)
-    
+
     pass
 
 async def main():
