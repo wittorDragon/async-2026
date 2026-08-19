@@ -72,3 +72,4 @@ if __name__ == "__main__":
     webbrowser.open(f"http://127.0.0.1:{8001}")
     # รัน Local Web Server บน Port 8001
     uvicorn.run(app, host="127.0.0.1", port=client_port)
+    

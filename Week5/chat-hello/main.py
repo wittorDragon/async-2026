@@ -55,3 +55,4 @@ async def websocket_endpoint(websocket: WebSocket, student_id: str):
     except WebSocketDisconnect:
         manager.disconnect(student_id)
         await manager.broadcast(f"[System]: รหัสนักศึกษา {student_id} ออกจากระบบ")
+        

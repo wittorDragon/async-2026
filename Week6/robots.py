@@ -18,6 +18,7 @@ ROBOTS = ["robot_1", "robot_2", "robot_3"]
 
 async def reset_factory(client: httpx.AsyncClient):
     """ส่ง Request เพื่อทำการ Reset สถานะของหุ่นยนต์ทั้งหมดของรหัสนักเรียนนี้"""
+    
 
     # TODO: เติมโค้ดการส่ง POST request ไปยัง /student/{STUDENT_ID}/reset
     pass
